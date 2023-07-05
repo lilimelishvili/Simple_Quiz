@@ -54,7 +54,7 @@ function ShowQuestion(){
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
     let questionNo = currentQuestionIndex + 1;
-    questionElement.innerHTML = question + ". " + currentQuestion.question;
+    questionElement.innerHTML = questions + ". " + currentQuestion.question;
 
     currentQuestion.answers.forEach(
         answer => {
@@ -83,9 +83,40 @@ function selectAnswer(e){
     const isCorrect = selectBtn.dataset.correct === "true";
     if(isCorrect){
         selectBtn.classList.add("correct");
+        score++;
     }else{
         selectBtn.classList.add("incorrect");
     }
+    Array.from(answerButton.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
 }
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = 
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < question.length){
+        ShowQuestion();
+    }else{
+        showScore();
+    }
+}
+
+nextButton.addEventListener("click", () =>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }else{
+        startQuiz();
+
+    }
+})
 
 startQuiz()
